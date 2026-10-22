@@ -91,6 +91,7 @@ class AdbSocketClient(
                     return handleHandshake()
                 }
             }
+            else -> return false
         }
         return false
     }
