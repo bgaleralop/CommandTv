@@ -1,5 +1,6 @@
 package es.bgaleralop.commandtv.data.network
 
+import es.bgaleralop.commandtv.data.network.AdbPacket.Companion.createAdbPacket
 import es.bgaleralop.commandtv.domain.model.AdbCommand
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -111,42 +112,12 @@ class AdbCommandManager(
     private fun sendClosePacket(localId: Int, remoteId: Int) {
         //Enviar CLOSE para cerrar definitivamente.
         val packet = createAdbPacket(
-            AdbCommand.CLOSE,
+            command = AdbCommand.CLOSE,
             arg0 = localId,
             arg1 = remoteId,
             payload = ByteArray(0)
         )
         outputStream.write(packet)
         outputStream.flush()
-    }
-
-
-    /**
-     * Crea el paquete para mandar al target
-     */
-    private fun createAdbPacket(
-        command: AdbCommand,
-        arg0: Int,
-        arg1: Int,
-        payload: ByteArray
-    ): ByteArray {
-        val cmdBytes = command.value.toByteArray(Charsets.UTF_8)
-        val dataLength = payload.size
-        val dataCheck = payload.sumOf { it.toInt() and 0XFF }
-
-        // El campo magic es el complemento bit a bit (~x) del comando entero.
-        val cmdInt = ByteBuffer.wrap(cmdBytes).order(ByteOrder.LITTLE_ENDIAN).getInt()
-        val magic = cmdInt.inv()
-
-        val buffer = ByteBuffer.allocate(24 + dataLength).order(ByteOrder.LITTLE_ENDIAN)
-        buffer.put(cmdBytes)
-        buffer.putInt(arg0)
-        buffer.putInt(arg1)
-        buffer.putInt(dataLength)
-        buffer.putInt(dataCheck)
-        buffer.putInt(magic)
-        buffer.put(payload)
-
-        return buffer.array()
     }
 }
