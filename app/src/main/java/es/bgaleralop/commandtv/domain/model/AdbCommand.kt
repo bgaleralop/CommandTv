@@ -5,5 +5,6 @@ enum class AdbCommand(val value: String) {
     AUTH("AUTH"),
     OPEN("OPEN"),
     WRITE("WRTE"),
-    CLOSE("CLSE")
+    CLOSE("CLSE"),
+    OK("OKAY")
 }
