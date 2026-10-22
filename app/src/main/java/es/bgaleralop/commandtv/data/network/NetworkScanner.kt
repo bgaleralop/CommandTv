@@ -2,6 +2,7 @@ package es.bgaleralop.commandtv.data.network
 
 import android.content.Context
 import android.net.wifi.WifiManager
+import es.bgaleralop.commandtv.domain.model.AdbDevice
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
@@ -82,8 +83,3 @@ class NetworkScanner(private val context: Context) {
     }
 }
 
-data class AdbDevice(
-    val ip: String,
-    val name: String, //Nombre del host
-    val port: Int = 5555
-)
