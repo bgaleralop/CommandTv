@@ -1,4 +1,4 @@
-package es.bgaleralop.commandtv.ui.theme
+package es.bgaleralop.commandtv.presentation.ui.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle

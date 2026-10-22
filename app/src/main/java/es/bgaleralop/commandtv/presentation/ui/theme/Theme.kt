@@ -1,6 +1,5 @@
-package es.bgaleralop.commandtv.ui.theme
+package es.bgaleralop.commandtv.presentation.ui.theme
 
-import android.app.Activity
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
