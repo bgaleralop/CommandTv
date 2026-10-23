@@ -18,7 +18,8 @@ import java.nio.ByteOrder
 class AdbSocketClient(
     private val keyManager: AdbKeyManager
 ) {
-    private var socket: Socket? = null
+    var socket: Socket? = null
+        private set
     private var outputStream: OutputStream? = null
     private var inputStream: InputStream? = null
 
@@ -30,7 +31,8 @@ class AdbSocketClient(
      *
      * @return true si la conexión es exitosa o false en caso contrario.
      */
-    suspend fun connect(ip: String, port: Int = 5555): Boolean = withContext(Dispatchers.IO) {
+    suspend fun connect(ip: String, port: Int = 5555): Result<Socket> =
+        withContext(Dispatchers.IO) {
         try {
             socket = Socket(ip, port).apply {
                 soTimeout = 10000
@@ -42,10 +44,14 @@ class AdbSocketClient(
             sendConnectionPacket()
 
             //2. Leemos la respuesta del servidor (Loop de handshake)
-            return@withContext handleHandshake()
+            if (handleHandshake()) {
+                Result.success(socket!!)
+            } else {
+                Result.failure(Exception("Handshake failed"))
+            }
         } catch (e: Exception) {
             e.printStackTrace()
-            false
+            return@withContext Result.failure(e)
         }
     }
 

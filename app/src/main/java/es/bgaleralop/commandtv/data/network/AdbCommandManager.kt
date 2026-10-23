@@ -22,12 +22,12 @@ class AdbCommandManager(
      * Ejecuta un comando shell de forma síncrona dentro de una corrutina y devuelve la salida
      * completa en texto (stdout/stderr combinado).
      */
-    suspend fun executeShell(command: AdbCommand, localId: Int = 1): String =
+    suspend fun executeShell(command: String, localId: Int = 1): String =
         withContext(Dispatchers.IO) {
             val outputBuilder = StringBuilder()
 
             //1. Enviar paquete OPEN con el comando shell
-            sendOpenCommand(command.value, localId)
+            sendOpenCommand(command, localId)
 
             //2. Bucle de lectura de respuesta del socet
             var remoteId = 0
