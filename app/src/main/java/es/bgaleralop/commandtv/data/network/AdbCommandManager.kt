@@ -2,6 +2,14 @@ package es.bgaleralop.commandtv.data.network
 
 import es.bgaleralop.commandtv.data.network.AdbPacket.Companion.createAdbPacket
 import es.bgaleralop.commandtv.domain.model.AdbCommand
+import es.bgaleralop.commandtv.domain.utils.ARG0_LENGTH
+import es.bgaleralop.commandtv.domain.utils.ARG0_OFFSET
+import es.bgaleralop.commandtv.domain.utils.ARG1_LENGTH
+import es.bgaleralop.commandtv.domain.utils.ARG1_OFFSET
+import es.bgaleralop.commandtv.domain.utils.COMMAND_LENGTH
+import es.bgaleralop.commandtv.domain.utils.DATA_LENGTH_LENGTH
+import es.bgaleralop.commandtv.domain.utils.DATA_LENGTH_OFFSET
+import es.bgaleralop.commandtv.domain.utils.HEADER_PACKAGE_SIZE
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.io.InputStream
@@ -33,20 +41,23 @@ class AdbCommandManager(
             var remoteId = 0
             var channelOpen = true
 
-            val headerBuffer = ByteArray(24)
+            val headerBuffer = ByteArray(HEADER_PACKAGE_SIZE)
 
             while (channelOpen) {
                 val bytesRead = inputStream.read(headerBuffer)
-                if (bytesRead < 24) break //Conexión interrumpida o final de stream.
+                if (bytesRead < HEADER_PACKAGE_SIZE) break //Conexión interrumpida o final de stream.
 
                 // Desempaquetar la cabecera ADB de 24 Bytes.
-                val commandStr = String(headerBuffer, 0, 4, StandardCharsets.UTF_8)
+                val commandStr = String(headerBuffer, 0, COMMAND_LENGTH, StandardCharsets.UTF_8)
                 val arg0 =
-                    ByteBuffer.wrap(headerBuffer, 4, 4).order(ByteOrder.LITTLE_ENDIAN).getInt()
+                    ByteBuffer.wrap(headerBuffer, ARG0_OFFSET, ARG0_LENGTH)
+                        .order(ByteOrder.LITTLE_ENDIAN).getInt()
                 val arg1 =
-                    ByteBuffer.wrap(headerBuffer, 8, 4).order(ByteOrder.LITTLE_ENDIAN).getInt()
+                    ByteBuffer.wrap(headerBuffer, ARG1_OFFSET, ARG1_LENGTH)
+                        .order(ByteOrder.LITTLE_ENDIAN).getInt()
                 val dataLength =
-                    ByteBuffer.wrap(headerBuffer, 12, 4).order(ByteOrder.LITTLE_ENDIAN).getInt()
+                    ByteBuffer.wrap(headerBuffer, DATA_LENGTH_OFFSET, DATA_LENGTH_LENGTH)
+                        .order(ByteOrder.LITTLE_ENDIAN).getInt()
 
                 // Leer el payload de datos si lo hay
                 val payload = ByteArray(dataLength)

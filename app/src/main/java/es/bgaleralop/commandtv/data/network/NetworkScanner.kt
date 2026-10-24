@@ -3,6 +3,7 @@ package es.bgaleralop.commandtv.data.network
 import android.content.Context
 import android.net.wifi.WifiManager
 import es.bgaleralop.commandtv.domain.model.AdbDevice
+import es.bgaleralop.commandtv.domain.utils.DEFAULT_EMULATOR_PORT
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
@@ -17,7 +18,7 @@ import java.net.Socket
  */
 class NetworkScanner(private val context: Context) {
 
-    var port: Int = 5555
+    var port: Int = DEFAULT_EMULATOR_PORT
         private set
     var timeoutMs: Int = 150
         private set

@@ -3,6 +3,18 @@ package es.bgaleralop.commandtv.data.network
 import es.bgaleralop.commandtv.data.crypto.AdbKeyManager
 import es.bgaleralop.commandtv.data.network.AdbPacket.Companion.createAdbPacket
 import es.bgaleralop.commandtv.domain.model.AdbCommand
+import es.bgaleralop.commandtv.domain.utils.ADB_VERSION
+import es.bgaleralop.commandtv.domain.utils.ARG0_LENGTH
+import es.bgaleralop.commandtv.domain.utils.ARG0_OFFSET
+import es.bgaleralop.commandtv.domain.utils.COMMAND_LENGTH
+import es.bgaleralop.commandtv.domain.utils.DATA_LENGTH_LENGTH
+import es.bgaleralop.commandtv.domain.utils.DATA_LENGTH_OFFSET
+import es.bgaleralop.commandtv.domain.utils.DEFAULT_EMULATOR_PORT
+import es.bgaleralop.commandtv.domain.utils.DEFAULT_TIMEOUT
+import es.bgaleralop.commandtv.domain.utils.HEADER_PACKAGE_SIZE
+import es.bgaleralop.commandtv.domain.utils.MAX_PAYLOAD
+import es.bgaleralop.commandtv.domain.utils.SIGN_TOKEN_REQUESTED
+import es.bgaleralop.commandtv.domain.utils.SIGN_TOKEN_RESPONSE
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.io.InputStream
@@ -31,11 +43,11 @@ class AdbSocketClient(
      *
      * @return true si la conexión es exitosa o false en caso contrario.
      */
-    suspend fun connect(ip: String, port: Int = 5555): Result<Socket> =
+    suspend fun connect(ip: String, port: Int = DEFAULT_EMULATOR_PORT): Result<Socket> =
         withContext(Dispatchers.IO) {
         try {
             socket = Socket(ip, port).apply {
-                soTimeout = 10000
+                soTimeout = DEFAULT_TIMEOUT
             }
             outputStream = socket?.getOutputStream()
             inputStream = socket?.getInputStream()
@@ -62,8 +74,8 @@ class AdbSocketClient(
         val payload = "host::\u0000".toByteArray(Charsets.UTF_8)
         val packet = createAdbPacket(
             command = AdbCommand.CONNECT,
-            arg0 = 0x01000000, // Version ADB
-            arg1 = 1048576, // Max payload
+            arg0 = ADB_VERSION, // Version ADB
+            arg1 = MAX_PAYLOAD, // Max payload
             payload = payload
         )
 
@@ -75,13 +87,16 @@ class AdbSocketClient(
      * Maneja el handshake con el host.
      */
     private fun handleHandshake(): Boolean {
-        val header = ByteArray(24)
+        val header = ByteArray(HEADER_PACKAGE_SIZE)
         val bytesRead = inputStream?.read(header) ?: -1
-        if (bytesRead < 24) return false
+        if (bytesRead < HEADER_PACKAGE_SIZE) return false
 
-        val command = AdbCommand.valueOf(String(header.copyOfRange(0, 4), Charsets.UTF_8))
-        val arg0 = ByteBuffer.wrap(header, 4, 4).order(ByteOrder.LITTLE_ENDIAN).getInt()
-        val dataLength = ByteBuffer.wrap(header, 12, 4).order(ByteOrder.LITTLE_ENDIAN).getInt()
+        val command =
+            AdbCommand.valueOf(String(header.copyOfRange(0, COMMAND_LENGTH), Charsets.UTF_8))
+        val arg0 = ByteBuffer.wrap(header, ARG0_OFFSET, ARG0_LENGTH).order(ByteOrder.LITTLE_ENDIAN)
+            .getInt()
+        val dataLength = ByteBuffer.wrap(header, DATA_LENGTH_OFFSET, DATA_LENGTH_LENGTH)
+            .order(ByteOrder.LITTLE_ENDIAN).getInt()
         val payload = ByteArray(dataLength)
         if (dataLength > 0) {
             inputStream?.read(payload)
@@ -90,7 +105,7 @@ class AdbSocketClient(
         when (command) {
             AdbCommand.CONNECT -> return true // Hemos conectado directamente
             AdbCommand.AUTH -> {
-                if (arg0 == 1) {
+                if (arg0 == SIGN_TOKEN_REQUESTED) {
                     // El servidor pide firmar el token
                     val signature = keyManager.signToken(payload)
                     sendAuthSignature(signature)
@@ -109,7 +124,7 @@ class AdbSocketClient(
     private fun sendAuthSignature(signature: ByteArray) {
         val packet = createAdbPacket(
             command = AdbCommand.AUTH,
-            arg0 = 2,
+            arg0 = SIGN_TOKEN_RESPONSE,
             arg1 = 0,
             payload = signature
         )

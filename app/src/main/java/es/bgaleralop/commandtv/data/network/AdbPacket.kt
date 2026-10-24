@@ -1,6 +1,7 @@
 package es.bgaleralop.commandtv.data.network
 
 import es.bgaleralop.commandtv.domain.model.AdbCommand
+import es.bgaleralop.commandtv.domain.utils.HEADER_PACKAGE_SIZE
 import java.nio.ByteBuffer
 import java.nio.ByteOrder
 
@@ -34,7 +35,8 @@ class AdbPacket {
             val cmdInt = ByteBuffer.wrap(cmdBytes).order(ByteOrder.LITTLE_ENDIAN).getInt()
             val magic = cmdInt.inv()
 
-            val buffer = ByteBuffer.allocate(24 + dataLength).order(ByteOrder.LITTLE_ENDIAN)
+            val buffer =
+                ByteBuffer.allocate(HEADER_PACKAGE_SIZE + dataLength).order(ByteOrder.LITTLE_ENDIAN)
             buffer.put(cmdBytes)
             buffer.putInt(arg0)
             buffer.putInt(arg1)
