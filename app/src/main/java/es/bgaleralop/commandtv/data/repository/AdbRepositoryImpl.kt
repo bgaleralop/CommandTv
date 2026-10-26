@@ -1,5 +1,6 @@
 package es.bgaleralop.commandtv.data.repository
 
+import es.bgaleralop.commandtv.data.crypto.AdbKeyManager
 import es.bgaleralop.commandtv.data.network.AdbCommandManager
 import es.bgaleralop.commandtv.data.network.AdbSocketClient
 import es.bgaleralop.commandtv.domain.repository.AdbRepository
@@ -14,9 +15,10 @@ import java.io.OutputStream
 import java.net.Socket
 
 class AdbRepositoryImpl(
-    private val socketClient: AdbSocketClient
+    private val keyManager: AdbKeyManager
 ) : AdbRepository {
 
+    private val socketClient: AdbSocketClient = AdbSocketClient(keyManager)
     private val _connectionState = MutableStateFlow<ConnectionState>(ConnectionState.Disconnected)
     override val connectionState: StateFlow<ConnectionState> = _connectionState.asStateFlow()
 

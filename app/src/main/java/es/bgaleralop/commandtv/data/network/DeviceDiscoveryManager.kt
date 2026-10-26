@@ -17,9 +17,11 @@ import kotlin.time.Duration.Companion.milliseconds
  */
 class DeviceDiscoveryManager(
     private val context: Context,
-    private val networkScanner: NetworkScanner,
-    private val nsdDiscoveryManager: TvDiscoveryManager
 ) {
+    private val networkScanner: NetworkScanner = NetworkScanner(context)
+    private val nsdDiscoveryManager: TvDiscoveryManager = TvDiscoveryManager(context)
+
+
     private val _devices = MutableStateFlow<List<AdbDevice>>(emptyList())
     val devices: StateFlow<List<AdbDevice>> = _devices.asStateFlow()
 
