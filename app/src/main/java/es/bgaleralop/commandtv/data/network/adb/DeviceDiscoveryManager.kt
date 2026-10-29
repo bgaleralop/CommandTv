@@ -1,4 +1,4 @@
-package es.bgaleralop.commandtv.data.network
+package es.bgaleralop.commandtv.data.network.adb
 
 import android.content.Context
 import es.bgaleralop.commandtv.domain.model.AdbDevice

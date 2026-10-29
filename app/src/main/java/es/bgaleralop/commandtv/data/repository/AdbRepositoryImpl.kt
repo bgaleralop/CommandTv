@@ -1,8 +1,8 @@
 package es.bgaleralop.commandtv.data.repository
 
 import es.bgaleralop.commandtv.data.crypto.AdbKeyManager
-import es.bgaleralop.commandtv.data.network.AdbCommandManager
-import es.bgaleralop.commandtv.data.network.AdbSocketClient
+import es.bgaleralop.commandtv.data.network.adb.AdbCommandManager
+import es.bgaleralop.commandtv.data.network.adb.AdbSocketClient
 import es.bgaleralop.commandtv.domain.repository.AdbRepository
 import es.bgaleralop.commandtv.domain.repository.ConnectionState
 import kotlinx.coroutines.Dispatchers

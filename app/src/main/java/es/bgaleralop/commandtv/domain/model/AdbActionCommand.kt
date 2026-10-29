@@ -9,7 +9,7 @@ sealed class AdbActionCommand(val command: String) {
         AdbActionCommand("pm uninstall --user 0 $packet")
 
     data class LaunchApp(val packet: String) :
-        AdbActionCommand("monkey -p $packet -c android.intent.category.LUNCHER 1")
+        AdbActionCommand("monkey -p $packet -c android.intent.category.LAUNCHER 1")
 
     object ListPackages : AdbActionCommand("pm list packages")
     object ListPackagesState : AdbActionCommand("pm list packages -f")

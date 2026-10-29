@@ -2,7 +2,7 @@ package es.bgaleralop.commandtv.di
 
 import android.content.Context
 import es.bgaleralop.commandtv.data.crypto.AdbKeyManager
-import es.bgaleralop.commandtv.data.network.DeviceDiscoveryManager
+import es.bgaleralop.commandtv.data.network.adb.DeviceDiscoveryManager
 import es.bgaleralop.commandtv.data.repository.AdbRepositoryImpl
 import es.bgaleralop.commandtv.domain.repository.AdbRepository
 import es.bgaleralop.commandtv.domain.usecase.AndroidTvServiceImpl

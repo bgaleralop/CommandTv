@@ -1,6 +1,6 @@
-package es.bgaleralop.commandtv.data.network
+package es.bgaleralop.commandtv.data.network.adb
 
-import es.bgaleralop.commandtv.data.network.AdbPacket.Companion.createAdbPacket
+import es.bgaleralop.commandtv.data.network.adb.AdbPacket.Companion.createAdbPacket
 import es.bgaleralop.commandtv.domain.model.AdbCommand
 import es.bgaleralop.commandtv.domain.utils.ARG0_LENGTH
 import es.bgaleralop.commandtv.domain.utils.ARG0_OFFSET

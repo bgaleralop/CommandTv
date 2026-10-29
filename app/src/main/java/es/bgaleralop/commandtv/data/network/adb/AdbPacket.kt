@@ -1,4 +1,4 @@
-package es.bgaleralop.commandtv.data.network
+package es.bgaleralop.commandtv.data.network.adb
 
 import es.bgaleralop.commandtv.domain.model.AdbCommand
 import es.bgaleralop.commandtv.domain.utils.HEADER_PACKAGE_SIZE

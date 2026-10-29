@@ -1,7 +1,6 @@
-package es.bgaleralop.commandtv.data.network
+package es.bgaleralop.commandtv.data.network.adb
 
 import es.bgaleralop.commandtv.data.crypto.AdbKeyManager
-import es.bgaleralop.commandtv.data.network.AdbPacket.Companion.createAdbPacket
 import es.bgaleralop.commandtv.domain.model.AdbCommand
 import es.bgaleralop.commandtv.domain.utils.ADB_VERSION
 import es.bgaleralop.commandtv.domain.utils.ARG0_LENGTH
@@ -72,7 +71,7 @@ class AdbSocketClient(
      */
     private fun sendConnectionPacket() {
         val payload = "host::\u0000".toByteArray(Charsets.UTF_8)
-        val packet = createAdbPacket(
+        val packet = AdbPacket.createAdbPacket(
             command = AdbCommand.CONNECT,
             arg0 = ADB_VERSION, // Version ADB
             arg1 = MAX_PAYLOAD, // Max payload
@@ -122,7 +121,7 @@ class AdbSocketClient(
      * Envía paquete con la firma del token si el host la solicita.
      */
     private fun sendAuthSignature(signature: ByteArray) {
-        val packet = createAdbPacket(
+        val packet = AdbPacket.createAdbPacket(
             command = AdbCommand.AUTH,
             arg0 = SIGN_TOKEN_RESPONSE,
             arg1 = 0,

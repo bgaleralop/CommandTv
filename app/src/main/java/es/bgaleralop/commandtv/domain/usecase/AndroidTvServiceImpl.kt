@@ -1,6 +1,6 @@
 package es.bgaleralop.commandtv.domain.usecase
 
-import es.bgaleralop.commandtv.data.network.DeviceDiscoveryManager
+import es.bgaleralop.commandtv.data.network.adb.DeviceDiscoveryManager
 import es.bgaleralop.commandtv.domain.model.AdbActionCommand
 import es.bgaleralop.commandtv.domain.model.AdbDevice
 import es.bgaleralop.commandtv.domain.model.AdbKeyEvents
