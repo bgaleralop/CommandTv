@@ -31,7 +31,7 @@ class NetworkScanner(private val context: Context) {
         val deferred = (1..254).map { i ->
             async {
                 val ip = "$subnet$i"
-                if (isAdbPortOpen(ip, port, timeoutMs)) {
+                if (isPortOpen(ip, port, timeoutMs)) {
                     AdbDevice(
                         ip = ip,
                         name = InetAddress.getByName(ip).hostName,
@@ -64,7 +64,7 @@ class NetworkScanner(private val context: Context) {
         return if (lastDotIndex != -1) ipString.substring(0, lastDotIndex + 1) else null
     }
 
-    private fun isAdbPortOpen(ip: String, port: Int, timeoutMs: Int): Boolean {
+    private fun isPortOpen(ip: String, port: Int, timeoutMs: Int): Boolean {
         return try {
             Socket().use { socket ->
                 socket.connect(InetSocketAddress(ip, port), timeoutMs)
