@@ -17,7 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import es.bgaleralop.commandtv.presentation.ui.remotecontrol.InnerApp
+import es.bgaleralop.commandtv.domain.model.InnerApp
 
 /**
  * Composable que muestra una tarjeta para representar un paquete de aplicación del sistema.

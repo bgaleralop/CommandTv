@@ -20,7 +20,7 @@ import androidx.compose.ui.unit.dp
 import es.bgaleralop.commandtv.presentation.ui.packets.components.CheckItem
 import es.bgaleralop.commandtv.presentation.ui.packets.components.MySearchBar
 import es.bgaleralop.commandtv.presentation.ui.packets.components.SystemAppCard
-import es.bgaleralop.commandtv.presentation.ui.remotecontrol.InnerApp
+import es.bgaleralop.commandtv.domain.model.InnerApp
 import es.bgaleralop.commandtv.presentation.ui.theme.CommandTvTheme
 
 /**
