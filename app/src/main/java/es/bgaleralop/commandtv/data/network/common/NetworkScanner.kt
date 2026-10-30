@@ -1,4 +1,4 @@
-package es.bgaleralop.commandtv.data.network.adb
+package es.bgaleralop.commandtv.data.network.common
 
 import android.content.Context
 import android.net.wifi.WifiManager
