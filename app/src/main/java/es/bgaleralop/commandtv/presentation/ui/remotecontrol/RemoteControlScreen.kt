@@ -2,17 +2,12 @@ package es.bgaleralop.commandtv.presentation.ui.remotecontrol
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.VolumeOff
 import androidx.compose.material.icons.automirrored.rounded.ArrowBack
@@ -22,29 +17,24 @@ import androidx.compose.material.icons.filled.PowerSettingsNew
 import androidx.compose.material.icons.filled.SentimentDissatisfied
 import androidx.compose.material.icons.filled.SentimentSatisfied
 import androidx.compose.material.icons.filled.VideoLibrary
-import androidx.compose.material.icons.rounded.Add
 import androidx.compose.material.icons.rounded.Assistant
 import androidx.compose.material.icons.rounded.ConnectedTv
 import androidx.compose.material.icons.rounded.Home
-import androidx.compose.material.icons.rounded.Remove
 import androidx.compose.material.icons.rounded.Subtitles
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.ShapeDefaults
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import es.bgaleralop.commandtv.domain.model.InnerApp
+import es.bgaleralop.commandtv.presentation.ui.remotecontrol.component.AppsGrid
+import es.bgaleralop.commandtv.presentation.ui.remotecontrol.component.DoubleIconButton
+import es.bgaleralop.commandtv.presentation.ui.remotecontrol.component.GridApp
+import es.bgaleralop.commandtv.presentation.ui.remotecontrol.component.SimpleIconButton
 import es.bgaleralop.commandtv.presentation.ui.theme.CommandTvTheme
 
 /**
@@ -76,11 +66,11 @@ fun RemoteControlScreen(
             horizontalArrangement = Arrangement.SpaceBetween,
             modifier = Modifier.fillMaxWidth(0.9f)
         ) {
-            SimpleButton(
+            SimpleIconButton(
                 icon = Icons.Default.PowerSettingsNew,
                 onClick = {}
             )
-            SimpleButton(
+            SimpleIconButton(
                 icon = Icons.AutoMirrored.Filled.VolumeOff,
                 onClick = {}
             )
@@ -92,15 +82,15 @@ fun RemoteControlScreen(
             horizontalArrangement = Arrangement.SpaceEvenly,
             modifier = Modifier.fillMaxWidth()
         ) {
-            SimpleButton(
+            SimpleIconButton(
                 icon = Icons.Rounded.Home,
                 onClick = {}
             )
-            SimpleButton(
+            SimpleIconButton(
                 icon = Icons.Rounded.Assistant,
                 onClick = {}
             )
-            SimpleButton(
+            SimpleIconButton(
                 icon = Icons.AutoMirrored.Rounded.ArrowBack,
                 onClick = {}
             )
@@ -110,7 +100,7 @@ fun RemoteControlScreen(
             horizontalArrangement = Arrangement.SpaceEvenly,
             modifier = Modifier.fillMaxWidth()
         ) {
-            DoubleButton(
+            DoubleIconButton(
                 text = "VOL",
                 onTopClick = {},
                 onBottomClick = {}
@@ -119,17 +109,17 @@ fun RemoteControlScreen(
                 verticalArrangement = Arrangement.SpaceEvenly,
                 modifier = Modifier.padding(vertical = 8.dp)
                 ) {
-                SimpleButton(
+                SimpleIconButton(
                     icon = Icons.AutoMirrored.Rounded.Input,
                     onClick = {}
                 )
                 Spacer(modifier = Modifier.height(8.dp))
-                SimpleButton(
+                SimpleIconButton(
                     icon = Icons.Rounded.Subtitles,
                     onClick = {}
                 )
             }
-            DoubleButton(
+            DoubleIconButton(
                 text = "CH",
                 onTopClick = {},
                 onBottomClick = {}
@@ -141,31 +131,7 @@ fun RemoteControlScreen(
     }
 }
 
-@Composable
-fun AppsGrid(
-    apps: List<GridApp>
-){
-    LazyVerticalGrid(
-        columns = GridCells.Fixed(4),
-        contentPadding = PaddingValues(8.dp),
-        verticalArrangement = Arrangement.spacedBy(8.dp),
-        horizontalArrangement = Arrangement.spacedBy(8.dp),
-        modifier = Modifier.fillMaxWidth()
-    ) {
-        items(apps) { app ->
-            SimpleButton(
-                icon = app.image,
-                onClick = {},
-                description = app.app.appName
-            )
-        }
-    }
-}
 
-data class GridApp(
-    val app: InnerApp,
-    val image: ImageVector
-)
 
 private val appsList = listOf<GridApp>(
     GridApp(
@@ -201,63 +167,8 @@ private val appsList = listOf<GridApp>(
 
 
 
-/**Represtación de un botón clickable con un icono. */
-@Composable
-fun SimpleButton(
-    icon: ImageVector,
-    onClick: () -> Unit,
-    modifier: Modifier = Modifier,
-    description: String = ""
-){
-    IconButton(
-        onClick = onClick,
-        colors = IconButtonDefaults.iconButtonColors().copy(
-            containerColor = Color.Gray.copy(alpha = 0.3f)
-        ),
-        modifier = modifier.size(48.dp)
-    ) {
-            Icon(
-                rememberVectorPainter(icon),
-                contentDescription = description
-            )
-    }
-}
 
-@Composable
-fun DoubleButton(
-    text: String,
-    onTopClick: () -> Unit,
-    onBottomClick: () -> Unit,
-    modifier: Modifier = Modifier
-) {
-    Surface(
-        color = Color.Gray.copy(alpha = 0.3f),
-        shape = ShapeDefaults.ExtraLarge,
-        modifier = modifier
-    ) {
-        Column(
-            horizontalAlignment = Alignment.CenterHorizontally,
-        ) {
-            IconButton(
-                onClick = onTopClick,
-            ) {
-                Icon(
-                    imageVector = Icons.Rounded.Add,
-                    contentDescription = ""
-                )
-            }
-            Text(text = text)
-            IconButton(
-                onClick = onBottomClick,
-            ) {
-                Icon(
-                    imageVector = Icons.Rounded.Remove,
-                    contentDescription = ""
-                )
-            }
-        }
-    }
-}
+
 
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
