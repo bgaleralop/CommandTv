@@ -8,5 +8,6 @@ import es.bgaleralop.commandtv.domain.utils.DEFAULT_EMULATOR_PORT
 data class AdbDevice(
     val ip: String,
     val name: String, //Nombre del host
-    val port: Int = DEFAULT_EMULATOR_PORT
+    val port: Int = DEFAULT_EMULATOR_PORT,
+    val os: DeviceOS = DeviceOS.ANDROID //Sistema operativo del host
 )

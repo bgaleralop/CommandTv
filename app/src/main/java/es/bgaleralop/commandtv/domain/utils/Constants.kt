@@ -2,6 +2,8 @@ package es.bgaleralop.commandtv.domain.utils
 
 const val DEFAULT_DEVICE_LISTENING_PORT: Int = 5037
 const val DEFAULT_EMULATOR_PORT: Int = 5555
+const val DEFAULT_WEBOS_PORT: Int = 3001
+const val DEFAULT_LEGACY_WEBOS_PORT: Int = 3000
 const val ADB_VERSION: Int = 0x01000000
 const val MAX_PAYLOAD: Int = 1048576
 const val DEFAULT_TIMEOUT: Int = 1000
