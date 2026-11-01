@@ -27,7 +27,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import es.bgaleralop.commandtv.domain.model.AdbDevice
+import es.bgaleralop.commandtv.domain.model.Device
 import es.bgaleralop.commandtv.presentation.ui.components.ScreenTitle
 import es.bgaleralop.commandtv.presentation.ui.theme.CommandTvTheme
 
@@ -82,7 +82,7 @@ fun SearchingInfo(modifier: Modifier = Modifier) {
  */
 @Composable
 fun DiscoveredDevices(
-    devices: List<AdbDevice>,
+    devices: List<Device>,
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -105,7 +105,7 @@ fun DiscoveredDevices(
  * Composable que representa la tarjeta de un dispositivo.
  */
 @Composable
-fun DeviceCard(device: AdbDevice, modifier: Modifier = Modifier) {
+fun DeviceCard(device: Device, modifier: Modifier = Modifier) {
     Card(
         modifier = modifier.fillMaxWidth(0.9f)
     ) {
@@ -131,13 +131,13 @@ fun DeviceCard(device: AdbDevice, modifier: Modifier = Modifier) {
     }
 }
 
-private val devicesList = listOf<AdbDevice>(
-    AdbDevice("192.168.1.1", "Host1"),
-    AdbDevice("192.168.1.2", "Host2"), AdbDevice("192.168.1.1", "Host1"),
-    AdbDevice("192.168.1.2", "Host2"), AdbDevice("192.168.1.1", "Host1"),
-    AdbDevice("192.168.1.2", "Host2"), AdbDevice("192.168.1.1", "Host1"),
-    AdbDevice("192.168.1.2", "Host2"), AdbDevice("192.168.1.1", "Host1"),
-    AdbDevice("192.168.1.2", "Host2"),
+private val devicesList = listOf<Device>(
+    Device("192.168.1.1", "Host1"),
+    Device("192.168.1.2", "Host2"), Device("192.168.1.1", "Host1"),
+    Device("192.168.1.2", "Host2"), Device("192.168.1.1", "Host1"),
+    Device("192.168.1.2", "Host2"), Device("192.168.1.1", "Host1"),
+    Device("192.168.1.2", "Host2"), Device("192.168.1.1", "Host1"),
+    Device("192.168.1.2", "Host2"),
 )
 
 @Preview(showBackground = true, showSystemUi = true)

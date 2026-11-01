@@ -2,7 +2,7 @@ package es.bgaleralop.commandtv.domain.usecase
 
 import es.bgaleralop.commandtv.data.network.adb.DeviceDiscoveryManager
 import es.bgaleralop.commandtv.domain.model.AdbActionCommand
-import es.bgaleralop.commandtv.domain.model.AdbDevice
+import es.bgaleralop.commandtv.domain.model.Device
 import es.bgaleralop.commandtv.domain.model.AdbKeyEvents
 import es.bgaleralop.commandtv.domain.model.AppPackage
 import es.bgaleralop.commandtv.domain.repository.AdbRepository
@@ -22,12 +22,12 @@ class AndroidTvServiceImpl(
 ) : CommandTvService {
     override val connectionState: StateFlow<ConnectionState> = repository.connectionState
 
-    override suspend fun discoverDevices(): StateFlow<List<AdbDevice>> {
+    override suspend fun discoverDevices(): StateFlow<List<Device>> {
         discoveryManager.startSmartDiscovery()
         return discoveryManager.devices
     }
 
-    override suspend fun connect(device: AdbDevice): Result<Unit> {
+    override suspend fun connect(device: Device): Result<Unit> {
         return repository.connect(device.ip, device.port)
     }
 

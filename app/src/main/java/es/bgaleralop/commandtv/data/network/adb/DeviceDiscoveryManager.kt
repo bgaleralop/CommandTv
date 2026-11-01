@@ -2,7 +2,7 @@ package es.bgaleralop.commandtv.data.network.adb
 
 import android.content.Context
 import es.bgaleralop.commandtv.data.network.common.NetworkScanner
-import es.bgaleralop.commandtv.domain.model.AdbDevice
+import es.bgaleralop.commandtv.domain.model.Device
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -23,8 +23,8 @@ class DeviceDiscoveryManager(
     private val nsdDiscoveryManager: TvDiscoveryManager = TvDiscoveryManager(context)
 
 
-    private val _devices = MutableStateFlow<List<AdbDevice>>(emptyList())
-    val devices: StateFlow<List<AdbDevice>> = _devices.asStateFlow()
+    private val _devices = MutableStateFlow<List<Device>>(emptyList())
+    val devices: StateFlow<List<Device>> = _devices.asStateFlow()
 
     private val _isScanning = MutableStateFlow(false)
     val isScanning: StateFlow<Boolean> = _isScanning.asStateFlow()
@@ -43,7 +43,7 @@ class DeviceDiscoveryManager(
             _isScanning.value = true
             _devices.value = emptyList()
 
-            val foundDevicesMap = mutableMapOf<String, AdbDevice>()
+            val foundDevicesMap = mutableMapOf<String, Device>()
 
             //1. Iniciamos mDNS
             nsdDiscoveryManager.startDiscovery { device ->
@@ -78,7 +78,7 @@ class DeviceDiscoveryManager(
             _devices.value = emptyList()
             nsdDiscoveryManager.stopDiscovery()
 
-            val foundDevicesMap = mutableMapOf<String, AdbDevice>()
+            val foundDevicesMap = mutableMapOf<String, Device>()
             runTcpSubnetScan(foundDevicesMap)
 
             _isScanning.value = false
@@ -88,7 +88,7 @@ class DeviceDiscoveryManager(
     /**
      * Realiza una búsqueda de dispositivos por fuerza bruta.
      */
-    private suspend fun runTcpSubnetScan(destinationMap: MutableMap<String, AdbDevice>) {
+    private suspend fun runTcpSubnetScan(destinationMap: MutableMap<String, Device>) {
         val activeIps = networkScanner.scanLocalNetwork()
 
         activeIps.forEach {

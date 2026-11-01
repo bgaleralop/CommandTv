@@ -1,6 +1,6 @@
 package es.bgaleralop.commandtv.domain.usecase
 
-import es.bgaleralop.commandtv.domain.model.AdbDevice
+import es.bgaleralop.commandtv.domain.model.Device
 import es.bgaleralop.commandtv.domain.model.AdbKeyEvents
 import es.bgaleralop.commandtv.domain.model.AppPackage
 import es.bgaleralop.commandtv.domain.repository.ConnectionState
@@ -12,8 +12,8 @@ import kotlinx.coroutines.flow.StateFlow
  */
 interface CommandTvService {
     val connectionState: StateFlow<ConnectionState>
-    suspend fun discoverDevices(): StateFlow<List<AdbDevice>>
-    suspend fun connect(device: AdbDevice): Result<Unit>
+    suspend fun discoverDevices(): StateFlow<List<Device>>
+    suspend fun connect(device: Device): Result<Unit>
     suspend fun disconnect()
     suspend fun getAllPackages(): List<AppPackage>
     suspend fun getEnabledPackages(): List<AppPackage>
