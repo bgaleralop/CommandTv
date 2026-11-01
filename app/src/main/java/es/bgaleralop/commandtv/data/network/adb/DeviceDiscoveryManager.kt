@@ -1,6 +1,7 @@
 package es.bgaleralop.commandtv.data.network.adb
 
 import android.content.Context
+import es.bgaleralop.commandtv.data.network.common.NetworkScanner
 import es.bgaleralop.commandtv.domain.model.AdbDevice
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
