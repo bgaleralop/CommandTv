@@ -43,7 +43,7 @@ import es.bgaleralop.commandtv.presentation.ui.theme.CommandTvTheme
 @Composable
 fun RemoteControlScreen(
     modifier: Modifier = Modifier
-){
+) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = modifier.fillMaxSize()
@@ -51,8 +51,10 @@ fun RemoteControlScreen(
         Row(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween,
-            modifier = Modifier.fillMaxWidth(0.9f).padding(bottom = 32.dp)
-        ){
+            modifier = Modifier
+                .fillMaxWidth(0.9f)
+                .padding(bottom = 32.dp)
+        ) {
             Text(
                 text = "Remote Control View",
                 fontSize = 28.sp,
@@ -108,7 +110,7 @@ fun RemoteControlScreen(
             Column(
                 verticalArrangement = Arrangement.SpaceEvenly,
                 modifier = Modifier.padding(vertical = 8.dp)
-                ) {
+            ) {
                 SimpleIconButton(
                     icon = Icons.AutoMirrored.Rounded.Input,
                     onClick = {}
@@ -130,7 +132,6 @@ fun RemoteControlScreen(
         AppsGrid(apps = appsList)
     }
 }
-
 
 
 private val appsList = listOf<GridApp>(
@@ -165,15 +166,10 @@ private val appsList = listOf<GridApp>(
 )
 
 
-
-
-
-
-
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun RemoteControlScreenPreview() {
-    CommandTvTheme() {
+    CommandTvTheme {
         Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
             RemoteControlScreen(
                 modifier = Modifier.padding(innerPadding)

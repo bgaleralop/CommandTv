@@ -17,7 +17,7 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun AppsGrid(
     apps: List<GridApp>
-){
+) {
     LazyVerticalGrid(
         columns = GridCells.Fixed(4),
         contentPadding = PaddingValues(8.dp),

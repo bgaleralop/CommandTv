@@ -11,7 +11,7 @@ import androidx.compose.ui.unit.sp
 fun ScreenTitle(
     title: String,
     modifier: Modifier = Modifier
-){
+) {
     Text(
         text = title,
         fontSize = 32.sp,

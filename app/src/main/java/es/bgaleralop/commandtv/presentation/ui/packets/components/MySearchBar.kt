@@ -19,15 +19,15 @@ fun MySearchBar(
     onQueryChange: (String) -> Unit,
     modifier: Modifier = Modifier,
     enabled: Boolean = true
-){
+) {
     TextField(
         value = query,
         onValueChange = onQueryChange,
         modifier = modifier.clip(ShapeDefaults.Medium),
-        placeholder = { Text("Filtrar Paquetes")},
+        placeholder = { Text("Filtrar Paquetes") },
         maxLines = 1,
         singleLine = true,
-        trailingIcon = { Icon(imageVector = Icons.Default.Search, contentDescription = "")},
+        trailingIcon = { Icon(imageVector = Icons.Default.Search, contentDescription = "") },
         enabled = enabled
     )
 }

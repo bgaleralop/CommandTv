@@ -20,7 +20,7 @@ fun CheckItem(
     Row(
         verticalAlignment = Alignment.CenterVertically,
         modifier = modifier
-    ){
+    ) {
         Text(text = text)
         Checkbox(
             checked = checked,

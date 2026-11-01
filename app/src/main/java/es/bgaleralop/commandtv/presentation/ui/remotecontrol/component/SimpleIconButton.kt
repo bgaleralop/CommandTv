@@ -19,7 +19,7 @@ fun SimpleIconButton(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
     description: String = ""
-){
+) {
     IconButton(
         onClick = onClick,
         colors = IconButtonDefaults.iconButtonColors().copy(

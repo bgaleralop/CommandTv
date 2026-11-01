@@ -17,10 +17,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import es.bgaleralop.commandtv.domain.model.InnerApp
 import es.bgaleralop.commandtv.presentation.ui.packets.components.CheckItem
 import es.bgaleralop.commandtv.presentation.ui.packets.components.MySearchBar
 import es.bgaleralop.commandtv.presentation.ui.packets.components.SystemAppCard
-import es.bgaleralop.commandtv.domain.model.InnerApp
 import es.bgaleralop.commandtv.presentation.ui.theme.CommandTvTheme
 
 /**
@@ -30,7 +30,7 @@ import es.bgaleralop.commandtv.presentation.ui.theme.CommandTvTheme
 fun SystemAppsScreen(
     systemApps: List<InnerApp>,
     modifier: Modifier = Modifier
-){
+) {
     var query by remember { mutableStateOf("") }
     var checkDisabledOnly by remember { mutableStateOf(false) }
 
@@ -41,7 +41,9 @@ fun SystemAppsScreen(
         MySearchBar(
             query = "",
             onQueryChange = { query = it },
-            modifier = Modifier.fillMaxWidth(0.98f).padding(bottom = 4.dp)
+            modifier = Modifier
+                .fillMaxWidth(0.98f)
+                .padding(bottom = 4.dp)
         )
         Row(
             modifier = Modifier.align(Alignment.End)
@@ -52,9 +54,7 @@ fun SystemAppsScreen(
                 onCheckedChange = { checkDisabledOnly = it }
             )
         }
-        LazyColumn(
-
-        ) {
+        LazyColumn {
             items(filterApps(systemApps, query)) { app ->
                 SystemAppCard(app, {})
             }
@@ -68,14 +68,17 @@ fun SystemAppsScreen(
 
 private fun filterApps(apps: List<InnerApp>, query: String): List<InnerApp> {
     return apps.filter { app ->
-        app.appName.contains(query, ignoreCase = true) || app.appPackage.contains(query, ignoreCase = true)
+        app.appName.contains(query, ignoreCase = true) || app.appPackage.contains(
+            query,
+            ignoreCase = true
+        )
     }
 }
 
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 private fun SystemAppsScreenPreview() {
-    CommandTvTheme() {
+    CommandTvTheme {
         Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
             SystemAppsScreen(
                 systemApps = listOf(

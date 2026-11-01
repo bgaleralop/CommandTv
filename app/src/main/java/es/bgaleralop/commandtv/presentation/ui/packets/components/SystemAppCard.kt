@@ -29,19 +29,22 @@ fun SystemAppCard(
     modifier: Modifier = Modifier
 ) {
     Card(
-        modifier = modifier.fillMaxWidth(0.95f).padding(horizontal = 12.dp, vertical = 6.dp)
+        modifier = modifier
+            .fillMaxWidth(0.95f)
+            .padding(horizontal = 12.dp, vertical = 6.dp)
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier.fillMaxWidth().padding(4.dp)
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(4.dp)
         ) {
             Icon(
                 imageVector = Icons.Default.Apps,
                 contentDescription = ""
             )
             Spacer(modifier = Modifier.padding(end = 4.dp))
-            Column(
-            ) {
+            Column {
                 Text(
                     systemApp.appName,
                     fontWeight = FontWeight.Bold

@@ -27,14 +27,14 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import es.bgaleralop.commandtv.domain.model.AdbDevice
+import es.bgaleralop.commandtv.domain.model.Device
 import es.bgaleralop.commandtv.presentation.ui.components.ScreenTitle
 import es.bgaleralop.commandtv.presentation.ui.theme.CommandTvTheme
 
 @Composable
 fun ConnectionScreen(
     modifier: Modifier = Modifier
-){
+) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = modifier.fillMaxSize()
@@ -44,7 +44,7 @@ fun ConnectionScreen(
         Spacer(modifier = Modifier.height(32.dp))
         DiscoveredDevices(devices = devicesList, modifier = Modifier.weight(10f))
         Spacer(modifier = Modifier.weight(1f))
-        OutlinedButton (
+        OutlinedButton(
             onClick = {},
             modifier = Modifier.fillMaxWidth(.7f)
         ) {
@@ -82,7 +82,7 @@ fun SearchingInfo(modifier: Modifier = Modifier) {
  */
 @Composable
 fun DiscoveredDevices(
-    devices: List<AdbDevice>,
+    devices: List<Device>,
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -105,7 +105,7 @@ fun DiscoveredDevices(
  * Composable que representa la tarjeta de un dispositivo.
  */
 @Composable
-fun DeviceCard(device: AdbDevice, modifier: Modifier = Modifier) {
+fun DeviceCard(device: Device, modifier: Modifier = Modifier) {
     Card(
         modifier = modifier.fillMaxWidth(0.9f)
     ) {
@@ -118,7 +118,7 @@ fun DeviceCard(device: AdbDevice, modifier: Modifier = Modifier) {
                 imageVector = Icons.Rounded.Tv,
                 contentDescription = ""
             )
-            Column() {
+            Column {
                 Text(
                     text = device.name,
                 )
@@ -131,18 +131,18 @@ fun DeviceCard(device: AdbDevice, modifier: Modifier = Modifier) {
     }
 }
 
-private val devicesList = listOf<AdbDevice>(
-    AdbDevice("192.168.1.1", "Host1"),
-    AdbDevice("192.168.1.2", "Host2"), AdbDevice("192.168.1.1", "Host1"),
-    AdbDevice("192.168.1.2", "Host2"), AdbDevice("192.168.1.1", "Host1"),
-    AdbDevice("192.168.1.2", "Host2"), AdbDevice("192.168.1.1", "Host1"),
-    AdbDevice("192.168.1.2", "Host2"), AdbDevice("192.168.1.1", "Host1"),
-    AdbDevice("192.168.1.2", "Host2"),
+private val devicesList = listOf<Device>(
+    Device("192.168.1.1", "Host1"),
+    Device("192.168.1.2", "Host2"), Device("192.168.1.1", "Host1"),
+    Device("192.168.1.2", "Host2"), Device("192.168.1.1", "Host1"),
+    Device("192.168.1.2", "Host2"), Device("192.168.1.1", "Host1"),
+    Device("192.168.1.2", "Host2"), Device("192.168.1.1", "Host1"),
+    Device("192.168.1.2", "Host2"),
 )
 
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
-fun ConnectionScreenPreview(){
+fun ConnectionScreenPreview() {
     CommandTvTheme {
         Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
             ConnectionScreen(

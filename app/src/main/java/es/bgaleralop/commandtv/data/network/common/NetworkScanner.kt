@@ -2,7 +2,7 @@ package es.bgaleralop.commandtv.data.network.common
 
 import android.content.Context
 import android.net.wifi.WifiManager
-import es.bgaleralop.commandtv.domain.model.AdbDevice
+import es.bgaleralop.commandtv.domain.model.Device
 import es.bgaleralop.commandtv.domain.utils.DEFAULT_EMULATOR_PORT
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
@@ -23,16 +23,16 @@ class NetworkScanner(private val context: Context) {
     var timeoutMs: Int = 150
         private set
 
-    suspend fun scanLocalNetwork(): List<AdbDevice> = withContext(Dispatchers.IO) {
+    suspend fun scanLocalNetwork(): List<Device> = withContext(Dispatchers.IO) {
         val subnet = getLocalSubnet() ?: return@withContext emptyList()
-        val activeDevices = mutableListOf<AdbDevice>()
+        val activeDevices = mutableListOf<Device>()
 
         // Lanzamos 254 corrutinas en paralelo para escanear toda la subred de golpe
         val deferred = (1..254).map { i ->
             async {
                 val ip = "$subnet$i"
                 if (isPortOpen(ip, port, timeoutMs)) {
-                    AdbDevice(
+                    Device(
                         ip = ip,
                         name = InetAddress.getByName(ip).hostName,
                         port = port

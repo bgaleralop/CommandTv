@@ -44,27 +44,27 @@ class AdbSocketClient(
      */
     suspend fun connect(ip: String, port: Int = DEFAULT_EMULATOR_PORT): Result<Socket> =
         withContext(Dispatchers.IO) {
-        try {
-            socket = Socket(ip, port).apply {
-                soTimeout = DEFAULT_TIMEOUT
-            }
-            outputStream = socket?.getOutputStream()
-            inputStream = socket?.getInputStream()
+            try {
+                socket = Socket(ip, port).apply {
+                    soTimeout = DEFAULT_TIMEOUT
+                }
+                outputStream = socket?.getOutputStream()
+                inputStream = socket?.getInputStream()
 
-            //1. Enviamos paquete de conexión inicial.
-            sendConnectionPacket()
+                //1. Enviamos paquete de conexión inicial.
+                sendConnectionPacket()
 
-            //2. Leemos la respuesta del servidor (Loop de handshake)
-            if (handleHandshake()) {
-                Result.success(socket!!)
-            } else {
-                Result.failure(Exception("Handshake failed"))
+                //2. Leemos la respuesta del servidor (Loop de handshake)
+                if (handleHandshake()) {
+                    Result.success(socket!!)
+                } else {
+                    Result.failure(Exception("Handshake failed"))
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
+                return@withContext Result.failure(e)
             }
-        } catch (e: Exception) {
-            e.printStackTrace()
-            return@withContext Result.failure(e)
         }
-    }
 
     /**
      * Envía el paquete inicial de conexión.
@@ -112,6 +112,7 @@ class AdbSocketClient(
                     return handleHandshake()
                 }
             }
+
             else -> return false
         }
         return false
