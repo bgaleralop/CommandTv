@@ -1,8 +1,9 @@
-package es.bgaleralop.commandtv.data.network.adb
+package es.bgaleralop.commandtv.data.network.common
 
 import android.content.Context
-import es.bgaleralop.commandtv.data.network.common.NetworkScanner
+import es.bgaleralop.commandtv.data.network.webos.WebOsScanner
 import es.bgaleralop.commandtv.domain.model.Device
+import es.bgaleralop.commandtv.domain.utils.DEFAULT_WEBOS_PORT
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -89,7 +90,10 @@ class DeviceDiscoveryManager(
      * Realiza una búsqueda de dispositivos por fuerza bruta.
      */
     private suspend fun runTcpSubnetScan(destinationMap: MutableMap<String, Device>) {
-        val activeIps = networkScanner.scanLocalNetwork()
+        val androidIps = networkScanner.scanLocalNetwork()
+        val webOsIp = WebOsScanner(context).scan(DEFAULT_WEBOS_PORT)
+
+        val activeIps = androidIps + webOsIp
 
         activeIps.forEach {
             destinationMap[it.ip] = it
