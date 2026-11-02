@@ -28,7 +28,7 @@ La aplicación permite ir mucho más allá de un mando a distancia tradicional, 
 El proyecto se está construyendo bajo estrictos estándares de **Clean Architecture** y principios de diseño modular:
 
 * **Gestión de Conexiones (Fuente Única de Verdad):** El socket TCP activo y sus flujos de entrada/salida (`InputStream` / `OutputStream`) se centralizan de forma segura en un repositorio persistente (`AdbRepositoryImpl`), garantizando que la conexión no se pierda al navegar entre las diferentes pantallas de la aplicación.
-* **Inyección de Dependencias Manual (Pure DI):** Se evita el uso de frameworks pesados mediante un contenedor global (`AppContainer`) que centraliza las dependencias, facilitando la escalabilidad y las pruebas unitarias.
+* **Inyección de Dependencias Mediante Hilt:** Se evita el uso de frameworks pesados mediante un contenedor global (`AppModule`) que centraliza las dependencias, facilitando la escalabilidad y las pruebas unitarias.
 * **Interfaz de Usuario Reactiva:** Desarrollada íntegramente con **Jetpack Compose** y Material 3, separando la lógica de estado (*StateFlow*) de los componentes visuales puros.
 
 ---
